@@ -16,6 +16,16 @@ class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
+    protected $fillable = [
+         'user_id',
+         'phone',
+         'address'
+     ];
+
+     public function profiles()
+     {
+        return $this->hasOne(Profile::class); 
+     }
 
     /**
      * Get the attributes that should be cast.
