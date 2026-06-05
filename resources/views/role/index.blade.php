@@ -23,7 +23,13 @@
                     <tr>
                         <td>{{ $index += 1 }}</td>
                         <td>{{ $role->name ?? '' }}</td>
-                        <td>{{ $role->is_active }}</td>
+                        <td>
+                            @if ($role->is_active == 1)
+                                <span class="badge text-white bg-primary">Active</span>
+                            @else
+                                <span class="badge text-white bg-danger">Inactive</span>
+                            @endif
+                        </td>
                         <td>
                             <a href="{{ route('role.edit', $role->id) }}" class="btn icon btn-primary">
                                 <i class="bi bi-pencil"></i>
