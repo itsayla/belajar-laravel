@@ -80,10 +80,11 @@ class StudentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Student $student)
     {
         $title = "Edit Student";
-        $edit = student::find($id);
+        $user = $student->user;
+        $edit = $student;
         $majors = Major::get();
         return view('student.edit', compact('title', 'edit', 'majors'));
     }

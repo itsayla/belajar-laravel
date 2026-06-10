@@ -27,6 +27,15 @@
                 <label for="">Phone *</label>
                 <input name="phone" type="number" class="form-control" placeholder="Enter your phone number" value="{{ $edit->phone }}">
             </div>
+            <div class="mb-3">
+                <label for="">Email *</label>
+                <input name="name" type="text" class="form-control" placeholder="Enter your email" required value="{{ $edit->user->email }}">
+            </div>
+            <div class="mb-3">
+                <label for="">Password *</label>
+                <input name="phone" type="number" class="form-control" placeholder="Enter your password">
+                {{-- <span class="text-secondary">Leave blank if you won't change it</span> --}}
+            </div>
             <button class="btn btn-primary" type="submit">Save</button>
             <a href="{{ url()->previous() }}" class="btn btn-outline-secondary">Back</a>
         </form>

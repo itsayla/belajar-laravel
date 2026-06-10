@@ -57,7 +57,7 @@ class InstructorController extends Controller
     public function edit(string $id)
     {
         $title = "Edit Instructor";
-        $edit = Instructor::find($id);
+        $edit = Instructor::with('user')->find($id);
         $majors = Major::get();
         return view('instructor.edit', compact('title', 'edit', 'majors'));
     }

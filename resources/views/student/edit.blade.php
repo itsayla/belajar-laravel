@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Edit Role')
+@section('title', 'Edit Student')
 
 @section('content')
 <div class="card">
@@ -27,8 +27,16 @@
                 <label for="">Phone *</label>
                 <input name="phone" type="number" class="form-control" placeholder="Enter your phone number" value="{{ $edit->phone }}">
             </div>
-            <button class="btn btn-primary" type="submit">Save</button>
-            <a href="{{ url()->previous() }}" class="btn btn-outline-secondary">Back</a>
+            <div class="mb-3">
+                <label for="">Email *</label>
+                <input name="name" type="text" class="form-control" placeholder="Enter your email" required value="{{ $edit->user->email }}">
+            </div>
+            <div class="mb-3">
+                <label for="">Password *</label>
+                <input name="phone" type="number" class="form-control" placeholder="Enter your phone password">
+                {{-- <span class="text-secondary">Leave blank if you won't change it</span> --}}
+            <button class="btn btn-primary mt-3" type="submit">Save</button>
+            <a href="{{ url()->previous() }}" class="btn btn-outline-secondary mt-3">Back</a>
         </form>
     </div>
 </div>
