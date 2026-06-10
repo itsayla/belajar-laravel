@@ -9,12 +9,18 @@ class Student extends Model
     protected $fillable = [
         'major_id', 
         'name', 
-        'phone' 
+        'phone', 
+        'user_id'
     ];
 
-    public function major () 
+    public function major() 
     {
         return $this->belongsTo(Major::class, 'major_id', 'id'); 
+    }
+
+    public function user() 
+    {
+        return $this->belongsTo(User::class); 
     }
 }
 

@@ -14,18 +14,34 @@
                 <select name="major_id" id="" class="form-control">
                     <option value="">Select One</option>
                     @foreach($majors as $major)
-                       <option value="{{ $major->id }}">{{ $major->name }}</option> 
+                    <option @selected(old('major_id') == $major->id) value="{{ $major->id }}">
+                        {{ $major->name }}
+                    </option> 
                     @endforeach
                 </select>
             </div>
             <div class="mb-3">
-                <label for="">Name *</label>
-                <input name="name" type="text" class="form-control" placeholder="Enter your name" required>
+                <label for="">Name</label>
+                <input name="name" type="text" class="form-control @error('name') is_invalid @enderror" placeholder="Enter your name" required value="{{ old('name') }}">
+                @error('name')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
             <div class="mb-3">
-                <label for="">Phone *</label>
-                <input name="phone" type="number" class="form-control" placeholder="Enter your phone number">
+                <label for="">Phone</label>
+                <input name="phone" type="number" class="form-control" placeholder="Enter your phone number" required>
             </div>
+            <div class="mb-3">
+                <label for="">Email</label>
+                <input name="email" type="email" class="form-control" placeholder="Enter your email" required>
+            </div>
+            <div class="mb-3">
+                <label for="">Password</label>
+                <input name="password" type="password" class="form-control" placeholder="Enter your password" required>
+            </div>
+
             <button class="btn btn-primary" type="submit">Save</button>
             <a href="{{ url()->previous() }}" class="btn btn-outline-secondary">Back</a>
         </form>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\KeyController;
 use App\Http\Controllers\LatihanController;
 use App\Http\Controllers\LockerController;
@@ -50,3 +51,4 @@ Route::resource('locker', LockerController::class);
 Route::resource('key', KeyController::class); 
 Route::resource('major', MajorController::class); 
 Route::resource('student', StudentController::class);
+Route::resource('instructor', InstructorController::class);

@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use League\CommonMark\Reference\Reference;
 
 return new class extends Migration
 {
@@ -12,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('students', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('major_id')
+        Schema::table('students', function (Blueprint $table) {
+            $table->foreignId('user_id')
+                ->unique()
                 ->reference('id')
-                ->on('majors')
+                ->on('users')
                 ->onDelete('cascade');
-            $table->string('name'); 
-            $table->string('phone')->nullable(); 
-            $table->timestamps();
         });
     }
 
@@ -29,6 +25,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('students');
+        Schema::table('students', function (Blueprint $table) {
+            //
+        });
     }
 };
