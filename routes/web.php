@@ -48,8 +48,9 @@ Route::get('dashboard', function(){
 Route::resource('menu', \App\Http\Controllers\MenuController::class); 
 Route::resource('user', \App\Http\Controllers\UserController::class); 
 Route::resource('role', \App\Http\Controllers\RoleController::class); 
-Route::resource('locker', LockerController::class); 
-Route::resource('key', KeyController::class); 
-Route::resource('major', MajorController::class); 
-Route::resource('student', StudentController::class);
-Route::resource('instructor', InstructorController::class);
+Route::resource('locker', \App\Http\Controllers\LockerController::class); 
+Route::resource('key', \App\Http\Controllers\KeyController::class); 
+Route::resource('major', \App\Http\Controllers\MajorController::class); 
+Route::resource('student', \App\Http\Controllers\StudentController::class);
+Route::resource('instructor', \App\Http\Controllers\InstructorController::class);
+Route::resource('user-role', \App\Http\Controllers\UserRoleController::class);

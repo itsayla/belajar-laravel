@@ -29,7 +29,7 @@
             </div>
             <div class="mb-3">
                 <label for="">Email *</label>
-                <input name="name" type="text" class="form-control" placeholder="Enter your email" required value="{{ $edit->user->email }}">
+                <input name="email" type="email" class="form-control" placeholder="Enter your email" required value="{{ $edit->user->email }}">
             </div>
             <div class="mb-3">
                 <label for="">Password *</label>

@@ -28,6 +28,16 @@ class User extends Authenticatable
         return $this->hasOne(Profile::class); 
      }
 
+     public function role()
+     {
+        return $this->belongsTo(Role::class); 
+     }
+
+     public function roles()
+     {
+        return $this->belongsToMany(Role::class, 'user_roles'); 
+     }
+
     /**
      * Get the attributes that should be cast.
      *

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Create New User')
+@section('title', 'Edit User')
 
 @section('content')
 <div class="card">
@@ -21,6 +21,19 @@
             <div class="mb-3">
                 <label for="">Password *</label>
                 <input type="password" class="form-control" placeholder="Enter your password" name="password">
+            </div>
+            <div class="mb-3">
+                <label for="">Role Name *</label>
+                <select name="role_ids[]" class="form-control" required multiple>
+                    <option value="">Select One</option>
+                    @foreach ($roles as $role)
+                        <option @selected(in_array($role->id, $edit->roles->pluck('id')->all())) value="{{ $role->id }}">{{ $role->name }}</option>
+                    @endforeach
+                </select>
+
+                <small class="text-secondary">
+                    )* Can choose more than one role
+                </small>
             </div>
             <button class="btn btn-primary" type="submit">Save</button>
             <a href="{{ url()->previous() }}" class="btn btn-outline-secondary">Back</a>

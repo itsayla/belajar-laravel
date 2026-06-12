@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Role;
 use App\Models\User; 
+use App\Models\UserRole;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Psy\Readline\Hoa\Console;
 use RealRashid\SweetAlert\Facades\Alert;
 
 
@@ -30,7 +34,8 @@ class UserController extends Controller
     public function create()
     {
         $title = "Create New User";
-        return view('user.create', compact('title'));
+        $roles = Role::get();
+        return view('user.create', compact('title', 'roles'));
     }
 
     /**
@@ -41,13 +46,30 @@ class UserController extends Controller
         //insert into users () values()
         $validate = $request->validate([
             'name'=> 'required', 
-            'email' => 'required|email|unique:users,email', 
+            'email' => 'required|email|unique:users,email',  
             'password' => 'required|min:6'
         ]);
+        
+        DB::beginTransaction();
+        try {
+            $user = User::create([
+                'name' => $request->name, 
+                'email' => $request->email, 
+                'password' => $request->password,
+            ]);
 
-        User::create($request->all());
-        Alert::success('Success!', 'Create User Success');
-        return redirect()->to('user'); 
+            $user->roles()->sync($request->role_ids);
+            DB::commit();
+
+            Alert::success('Success!', 'Create User Success');
+            return redirect()->to('user'); 
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+            DB::rollBack(); 
+            Alert::error('Fail!', 'An error occured while saving the user');
+            return back()->withInput(); 
+        }
+
     }
 
     /**
@@ -66,7 +88,9 @@ class UserController extends Controller
         $title = "Edit User";
         $edit = User::find($id); //blank
         //$edit = User::findOrFail($id); 404
-        return view('user.edit', compact('title', 'edit'));
+        $roles = Role::get();
+        return view('user.edit', compact('title', 'edit', 'roles'));
+        
     }
 
     /**
@@ -74,18 +98,28 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $data = [
-            'name' => $request->name, 
-            'email' => $request->email, 
-        ];
+        try {
+            $data = [
+                'name' => $request->name, 
+                'email' => $request->email, 
+            ];   
+            if(filled($request->password)){
+                $data['password'] = $request->password; 
+            }
 
-        //jika user memasukan password
-        if(filled($request->password)){
-            $data['password'] = $request->password; 
+            $user = User::find($id);
+            $user->update($data);
+            $user->roles()->sync($request->role_ids); 
+            Alert::success('Success!', 'Update user successfully'); 
+            return redirect()->to('user'); 
+        } catch (\Throwable $e) {
+            DB::rollBack(); 
+            Alert::error('Fail!', 'Update failed!'); 
+            return back()->withInput(); 
         }
 
-        User::find($id)->update($data); 
-        return redirect()->to('user'); 
+        //jika user memasukan password
+
     }
 
     /**
@@ -93,7 +127,9 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        User::find($id)->delete();
+        $user = User::findOrFail($id); 
+        $user->delete();
+        Alert::success('Success!', 'Delete user success');
         return redirect()->to('user'); 
     }
 }

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'User Management')
+@section('title', 'User Role Management')
 @section('content')
     <div class="card">
         <div class="card-header">
@@ -7,34 +7,28 @@
         </div>
         <div class="card-body">
             <div class="mb-3" align="right">
-                <a href="{{ route('user.create') }}" class="btn btn-primary">Create New User</a>
+                <a href="{{ route('user-role.create') }}" class="btn btn-primary">Create New User Role</a>
             </div>
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Roles</th>
+                        <th>User Name</th>
+                        <th>Role Name</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $index => $user)
+                    @foreach ($userRoles as $index => $userRole)
                     <tr>
                         <td>{{ $index += 1 }}</td>
-                        <td>{{ $user->name ?? '' }}</td>
-                        <td>{{ $user->email }}</td>
+                        <td>{{ $userRole->user->name ?? '' }}</td>
+                        <td>{{ $userRole->user->role ?? '' }}</td>
                         <td>
-                            @foreach ($user->roles as $role)
-                                <span class="badge bg-primary">{{ $role->name ?? '-'}}</span>
-                            @endforeach
-                        </td>
-                        <td>
-                            <a href="{{ route('user.edit', $user->id) }}" class="btn icon btn-primary">
+                            <a href="{{ route('user-role.edit', $userRole->id) }}" class="btn icon btn-primary">
                                 <i class="bi bi-pencil"></i>
                             </a>
-                            <form action="{{ route('user.destroy', $user->id) }}" method="post" class="d-inline">
+                            <form action="{{ route('user-role.destroy', $role->id) }}" method="post" class="d-inline">
                                 @csrf
                                 @method('DELETE')
 
