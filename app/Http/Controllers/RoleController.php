@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Menu;
 use App\Models\Role; 
+use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
 
@@ -64,8 +65,9 @@ class RoleController extends Controller
     {
         $title = "Edit Role";
         $edit = Role::find($id); //blank
+        $parents = Menu::with('children')->whereNull('parent_id')->where('is_active', 1)->orderBy('sort_order')->get(); 
         //$edit = User::findOrFail($id); 404
-        return view('role.edit', compact('title', 'edit'));
+        return view('role.edit', compact('title', 'edit', 'parents'));
     }
 
     /**
