@@ -34,8 +34,14 @@ class UserController extends Controller
     public function create()
     {
         $title = "Create New User";
+        $lastUser = User::latest()->first(); 
+        // $number = $lastUser ? int() substr($lastUser->code, 3) + 1 : $lastUser->id; 
+        // output di pak Reza: "USR0015"; 
+        $userCode = "USR". str_pad($lastUser->id, 5, "0", STR_PAD_LEFT);
+        // output : USR00016 (di tabel pak Reza)
+        // return $userCode;
         $roles = Role::get();
-        return view('user.create', compact('title', 'roles'));
+        return view('user.create', compact('title', 'roles', 'userCode'));
     }
 
     /**
